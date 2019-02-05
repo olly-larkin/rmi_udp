@@ -34,6 +34,4 @@ public class MessageInfo implements Serializable {
 	public String toString(){
 		return new String(totalMessages+";"+messageNum+"\n");
 	}
-
-
 }
