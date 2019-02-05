@@ -19,41 +19,43 @@ public class UDPServer {
 	private int totalMessages = -1;
 	private int passedMessages = 0;
 	private int[] receivedMessages;
-	private boolean close;
 
 	private void run() {
 		byte[]			pacData = new byte[20];
 		DatagramPacket 	pac;
 
-		close = false;
-
 		// TO-DO: Receive the messages and process them by calling processMessage(...).
 		//        Use a timeout (e.g. 30 secs) to ensure the program doesn't block forever
 		pac = new DatagramPacket(pacData, 20);
-		while(passedMessages < totalMessages || totalMessages == -1) {
-			try {
-				recvSoc.receive(pac);
-				processMessage(new String(pac.getData()).trim());
-			} catch(SocketTimeoutException e) { 
-				if (totalMessages != -1) {
-					System.out.println("Timeout occurred: " + e);
-					break;
+		while(1) {
+			while(passedMessages < totalMessages || totalMessages == -1) {
+				try {
+					recvSoc.receive(pac);
+					processMessage(new String(pac.getData()).trim());
+				} catch(SocketTimeoutException e) { 
+					if (totalMessages != -1) {
+						System.out.println("Timeout occurred: " + e);
+						break;
+					}
+				} catch(Exception e) {
+					System.out.println("Exception in run: " + e);
+					System.exit(-1);
 				}
-			} catch(Exception e) {
-				System.out.println("Exception in run: " + e);
-				System.exit(-1);
 			}
+	
+			int messagesReceived = 0;
+			System.out.print("Messages dropped:\n");
+			for (int i = 0; i < totalMessages; ++i) {
+				if (receivedMessages[i] == 1)
+					messagesReceived++;
+				else
+					System.out.print("Message " + i+1 + " dropped\n");
+			}
+			System.out.print(messagesReceived + " messages successfully received: " + ((double)messagesReceived/(double)totalMessages)*100.00 + "% success\n\n");
+			totalMessages = -1;
+			passedMessages = 0;
+			receivedMessages = null;
 		}
-
-		int messagesReceived = 0;
-		System.out.print("Messages dropped:\n");
-		for (int i = 0; i < totalMessages; ++i) {
-			if (receivedMessages[i] == 1)
-				messagesReceived++;
-			else
-				System.out.print("Message " + i+1 + " dropped\n");
-		}
-		System.out.print(messagesReceived + " messages successfully received: " + ((double)messagesReceived/(double)totalMessages)*100.00 + "% success\n\n");
 	}
 
 	public void processMessage(String data) {
