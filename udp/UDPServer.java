@@ -76,6 +76,7 @@ public class UDPServer {
 
 		// TO-DO: Log receipt of the message
 		receivedMessages[msg.messageNum-1] = 1;
+		System.out.print(msg.toString());
 	}
 
 
