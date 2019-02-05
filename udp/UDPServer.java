@@ -27,7 +27,7 @@ public class UDPServer {
 		// TO-DO: Receive the messages and process them by calling processMessage(...).
 		//        Use a timeout (e.g. 30 secs) to ensure the program doesn't block forever
 		pac = new DatagramPacket(pacData, 20);
-		while(1) {
+		while(true) {
 			while(passedMessages < totalMessages || totalMessages == -1) {
 				try {
 					recvSoc.receive(pac);
