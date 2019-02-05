@@ -28,6 +28,7 @@ public class UDPServer {
 		//        Use a timeout (e.g. 30 secs) to ensure the program doesn't block forever
 		pac = new DatagramPacket(pacData, 20);
 		while(passedMessages < totalMessages || totalMessages == -1) {
+			System.out.println(passedMessages);
 			try {
 				recvSoc.receive(pac);
 				processMessage(new String(pac.getData()).trim());
