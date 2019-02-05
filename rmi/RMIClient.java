@@ -39,7 +39,11 @@ public class RMIClient {
 		// TO-DO: Attempt to send messages the specified number of times
 		for (int i = 0; i < numMessages; ++i) {
 			MessageInfo msg = new MessageInfo(numMessages, i);
-			iRMIServer.receiveMessage(msg);
+			try {
+				iRMIServer.receiveMessage(msg);
+			} catch(RemoteException e) {
+				System.out.print("Message " + i + " not sent: " + e);
+			}
 		}
 	}
 }
