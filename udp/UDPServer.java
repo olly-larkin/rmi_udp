@@ -17,7 +17,6 @@ public class UDPServer {
 
 	private DatagramSocket recvSoc;
 	private int totalMessages = -1;
-	private int passedMessages = 0;
 	private int[] receivedMessages;
 
 	private void run() {
@@ -27,14 +26,12 @@ public class UDPServer {
 		// TO-DO: Receive the messages and process them by calling processMessage(...).
 		//        Use a timeout (e.g. 30 secs) to ensure the program doesn't block forever
 		pac = new DatagramPacket(pacData, 20);
-		while(passedMessages < totalMessages || totalMessages == -1) {
-			System.out.println(passedMessages);
+		while(true) {
 			try {
 				recvSoc.receive(pac);
 				processMessage(new String(pac.getData()).trim());
 			} catch(SocketTimeoutException e) { 
 				if (totalMessages != -1) {
-					System.out.println("Timeout occurred: " + e);
 					break;
 				}
 			} catch(Exception e) {
@@ -77,7 +74,6 @@ public class UDPServer {
 
 		// TO-DO: Log receipt of the message
 		receivedMessages[msg.messageNum-1] = 1;
-		System.out.print(msg.toString());
 	}
 
 
