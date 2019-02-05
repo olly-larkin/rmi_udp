@@ -34,7 +34,7 @@ public class RMIClient {
 		// TO-DO: Bind to RMIServer
 		try {
 			Registry reg = LocateRegistry.getRegistry(args[0]);
-			iRMIServer = (RMIServer)reg.lookup(urlServer);
+			iRMIServer = (RMIServerI)reg.lookup(urlServer);
 		} catch(Exception e) {
 			System.out.print("Error: " + e);
 		}
