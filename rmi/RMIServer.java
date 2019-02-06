@@ -33,11 +33,11 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 		}
 
 		// TO-DO: Log receipt of the message
-		receivedMessages[msg.messageNum] = 1;
+		receivedMessages[msg.messageNum-1] = 1;
 
 		// TO-DO: If this is the last expected message, then identify
 		//        any missing messages
-		if (msg.messageNum == totalMessages - 1) {
+		if (msg.messageNum == totalMessages) {
 			int messagesReceived = 0;
 			System.out.print("Messages dropped:\n");
 			for (int i = 0; i < totalMessages; ++i) {
@@ -61,6 +61,13 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 		if (System.getSecurityManager() == null) {
 			System.setSecurityManager(new SecurityManager());
 		}
+
+		if (args.length < 1) {
+			System.err.println("Arguments required: ip address");
+			System.exit(-1);
+		}
+
+		System.setProperty("java.rmi.server.hostname", args[0]);
 
 		// TO-DO: Instantiate the server class
 		try {

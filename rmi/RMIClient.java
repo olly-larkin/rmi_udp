@@ -44,7 +44,7 @@ public class RMIClient {
 		timeTakenM = System.nanoTime();
 		// TO-DO: Attempt to send messages the specified number of times
 		for (int i = 0; i < numMessages; ++i) {
-			MessageInfo msg = new MessageInfo(numMessages, i);
+			MessageInfo msg = new MessageInfo(numMessages, i+1);
 			try {
 				iRMIServer.receiveMessage(msg);
 			} catch(RemoteException e) {
