@@ -16,6 +16,7 @@ public class RMIClient {
 	public static void main(String[] args) {
 
 		RMIServerI iRMIServer = null;
+		long timeTakenM = 0;
 
 		// Check arguments for Server host and number of messages
 		if (args.length < 2){
@@ -31,6 +32,7 @@ public class RMIClient {
 			System.setSecurityManager(new SecurityManager());
 		}
 
+
 		// TO-DO: Bind to RMIServer
 		try {
 			Registry reg = LocateRegistry.getRegistry(args[0]);
@@ -39,6 +41,7 @@ public class RMIClient {
 			System.out.print("Error: " + e);
 		}
 
+		timeTakenM = System.nanoTime();
 		// TO-DO: Attempt to send messages the specified number of times
 		for (int i = 0; i < numMessages; ++i) {
 			MessageInfo msg = new MessageInfo(numMessages, i);
@@ -48,5 +51,8 @@ public class RMIClient {
 				System.out.print("Message " + i + " not sent: " + e);
 			}
 		}
+		timeTakenM = System.nanoTime() - timeTakenM;
+
+		System.out.println("Took " + (double)timeTakenM/1000000.00 + " milliseconds: Avg " + (double)(timeTakenM/1000000)/(double)numMessages + " milliseconds per message.");
 	}
 }

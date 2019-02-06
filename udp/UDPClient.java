@@ -15,6 +15,7 @@ import common.MessageInfo;
 public class UDPClient {
 
 	private DatagramSocket sendSoc;
+	public long timeTakenM;
 
 	public static void main(String[] args) {
 		InetAddress	serverAddr = null;
@@ -41,6 +42,7 @@ public class UDPClient {
 		// TO-DO: Construct UDP client class and try to send messages
 		UDPClient client = new UDPClient();
 		client.testLoop(serverAddr, recvPort, countTo);
+		System.out.println("Took " + client.timeTakenM/1000000 + " milliseconds: Avg " + (double)(client.timeTakenM/1000000)/(double)countTo + " milliseconds per message.");
 	}
 
 	public UDPClient() {
@@ -55,10 +57,12 @@ public class UDPClient {
 
 	private void testLoop(InetAddress serverAddr, int recvPort, int countTo) {
 		// TO-DO: Send the messages to the server
+		timeTakenM = System.nanoTime();
 		for(int i = 0; i < countTo; ++i) {
 			MessageInfo msg = new MessageInfo(countTo, i+1);
 			send(msg.toString(), serverAddr, recvPort);
 		}
+		timeTakenM = System.nanoTime() - timeTakenM;
 	}
 
 	private void send(String payload, InetAddress destAddr, int destPort) {
