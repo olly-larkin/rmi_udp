@@ -81,7 +81,7 @@ public class UDPServer {
 		// TO-DO: Initialise UDP socket for receiving data
 		try {
 			recvSoc = new DatagramSocket(rp);
-			recvSoc.setSoTimeout(2000);
+			recvSoc.setSoTimeout(10000);
 		} catch(Exception e) {
 			System.out.println("Exception in UDPServer: " + e);
 			System.exit(-1);
