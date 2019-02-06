@@ -41,14 +41,14 @@ public class UDPServer {
 		}
 
 		int messagesReceived = 0;
-		System.out.print("Messages dropped:\n");
+		//System.out.print("Messages dropped:\n");
 		for (int i = 0; i < totalMessages; ++i) {
 			if (receivedMessages[i] == 1)
 				messagesReceived++;
-			else
-				System.out.print("Message " + i+1 + " dropped\n");
+			//else
+			//	System.out.print("Message " + i+1 + " dropped\n");
 		}
-		System.out.print(messagesReceived + " messages successfully recieved: " + ((double)messagesReceived/(double)totalMessages)*100.00 + "% success\n\n");
+		System.out.print(messagesReceived + " messages successfully received, " + (totalMessages - messagesReceived) + " messages lost - " + ((double)messagesReceived/(double)totalMessages)*100.00 + "% success\n\n");
 	}
 
 	public void processMessage(String data) {
