@@ -46,7 +46,7 @@ public class RMIServer extends UnicastRemoteObject implements RMIServerI {
 				else
 					System.out.print("Message " + i + " dropped\n");
 			}
-			System.out.print(messagesReceived + " messages successfully sent: " + ((double)messagesReceived/(double)totalMessages)*100.00 + "% success\n\n");
+			System.out.print(messagesReceived + " messages successfully received: " + ((double)messagesReceived/(double)totalMessages)*100.00 + "% success\n\n");
 			totalMessages = -1;
 			receivedMessages = null;
 		}
